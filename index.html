@@ -1,45 +1,57 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<style>
-	.highlight {background-color:yellow;}
-	li font.this{
-		color:#F00;
-	}
-	</style>
-    <meta charset="UTF-8">
-    <title>AngularJs</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AngularJs</title>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
-<body ng-app="myApp" ng-controller="myFriends">
- 
-    <p>name:<input type="text" ng-model="searchname" class="myInput">   </p>   
-    <ul>
-        <li ng-repeat="friend in friends" ng-if="friend.name.match(searchname)">
-            <font class="abc">{{friend.name}},{{friend.birth}},{{friend.phone}},{{friend.email}}</font>
-        </li>
-    </ul>
+<body>
+    <div class="jumbotron">
+        <h1>AngularJs JSON Data Search</h1>
+        <p>
+            <a href="/join" class="btn btn-primary">
+                <span class="glyphicon glyphicon-user">
+                회원가입
+            </a>
+        </p>
+    </div>
+
+    <div ng-app="myApp" ng-controller="MyFriends">
+        <form> 
+            <!-- 입력 -->
+            <input type="text" ng-model="name" class="form-coltrol">
+        </form>
+        <!-- JSON 파일 받아오기 -->
+        <table class="table table-bordered">
+            <tr ng-repeat="friend in friends" ng-if="friend.name.match(name)">
+                <td>{{friend.name}}</td>
+                <td>{{friend.birth}}</td>
+                <td>{{friend.phone}}</td>
+                <td>{{friend.email}}</td>
+            </tr>
+        </table>
+    </div>
    
     <script>
         var app = angular.module('myApp',[]);
-        app.controller('myFriends',function($scope,$http){
+        app.controller('MyFriends',function($scope,$http){
             $http.get("friends.json").then(function(res){
                 $scope.friends = res.data;
             });
         });
         $(function(){
-        	$(".myInput").on("keydown",function(){
-
-        		check();
-        	});
-
-
-        	function check(){
-        		if($(".myInput").val() != "") $(".abc").addClass("this");
-        		if($(".myInput").val() == "") $(".abc").removeClass("this");
-        	}
-        });
+        $(".myInput").on("keydown",function(){
+            if($(".myInput").val() != ""){
+                $(".abc").addClass("this");
+            }
+            else{
+                $(".abc").removeClass("this");  
+            }
+        })
+        })
         
     </script>      
  
